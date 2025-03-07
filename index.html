@@ -8,5 +8,30 @@
 <body>
     <h1>這是 Pay 測試網站</h1>
     <p>這個網站只是測試用途，沒有實際交易功能。</p>
+
+    <button id="payButton">🔗 使用 LINE Pay 付款</button>
+
+    <script>
+        document.getElementById("payButton").addEventListener("click", async () => {
+            try {
+                const response = await fetch("https://YOUR_BACKEND_DOMAIN/create-payment", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ amount: 100 }) // 測試金額
+                });
+
+                const data = await response.json();
+                if (data.paymentUrl) {
+                    window.location.href = data.paymentUrl; // 跳轉到 LINE Pay 付款頁面
+                } else {
+                    alert("付款連結獲取失敗！");
+                }
+            } catch (error) {
+                console.error("付款錯誤:", error);
+                alert("發生錯誤，請稍後再試。");
+            }
+        });
+    </script>
 </body>
 </html>
+<!-- Test update -->
