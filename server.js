@@ -2,15 +2,11 @@ require("dotenv").config(); // 載入 .env 環境變數
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
-app.use(cors());
-const app = express();
 
-// ✅ 確保 CORS 正確啟用，讓前端 localhost 能呼叫
-app.use(cors());
-app.use(express.json());
+const app = express(); // 先宣告 app
 
-// ✅ 處理 OPTIONS 預檢請求，避免 preflight 出錯
-app.options('/create-payment', cors());
+app.use(cors()); // 啟用 CORS
+app.use(express.json()); // 啟用 JSON 處理
 
 // ✅ 處理 LINE Pay 建立付款請求
 app.post("/create-payment", async (req, res) => {
@@ -28,7 +24,7 @@ app.post("/create-payment", async (req, res) => {
                     id: "1",
                     amount: amount,
                     name: "測試商品",
-                    products: [  // 必填 products
+                    products: [
                         {
                             id: "P001",
                             name: "測試商品",
@@ -39,8 +35,8 @@ app.post("/create-payment", async (req, res) => {
                 }
             ],
             redirectUrls: {
-                confirmUrl: "https://lantyr.github.io/line-pay-test/", // 成功返回
-                cancelUrl: "https://lantyr.github.io/line-pay-test/cancel" // 取消返回
+                confirmUrl: "https://lantyr.github.io/line-pay-test/",
+                cancelUrl: "https://lantyr.github.io/line-pay-test/cancel"
             }
         }, {
             headers: {
@@ -50,17 +46,15 @@ app.post("/create-payment", async (req, res) => {
             }
         });
 
-        // ✅ 成功回傳 LINE Pay 的付款網址
-        console.log("LINE Pay API 回傳資料: ", response.data); // 除錯用
-        res.json({ paymentUrl: response.data.info.paymentUrl.web }); // 前端會拿來導向付款
+        console.log("LINE Pay API 回傳資料: ", response.data); // 除錯
+        res.json({ paymentUrl: response.data.info.paymentUrl.web }); // 回傳付款網址
     } catch (error) {
-        //
         console.error("LINE Pay API 發生錯誤: ", error.response?.data || error.message);
         res.status(500).json({ error: "伺服器錯誤", details: error.response?.data || error.message });
     }
 });
 
-// ✅ 監聽 3000 port
-app.listen(3000, () => {
-    console.log("✅ Server is running on port 3000");
+// ✅ 改成監聽 4000 port
+app.listen(4000, () => {
+    console.log("✅ Server is running on port 4000");
 });
