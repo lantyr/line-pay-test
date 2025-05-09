@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay 測試頁面</title>
+</head>
+<body>
+    <h1> Pay </h1>
+    <p>測試用途</p>
+
+    <button id="payButton">LINE Pay</button>
+
+    <script>
+        document.getElementById("payButton").addEventListener("click", async () => {
+            try {
+                const response = await fetch("http://localhost:4000/create-payment", { // 改成 4000
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ amount: 100 }) // 測試金額
+                });
+
+                const data = await response.json();
+                if (data.paymentUrl) {
+                    window.location.href = data.paymentUrl; // 導向 LINE Pay
+                } else {
+                    alert("付款連結獲取失敗！");
+                }
+            } catch (error) {
+                console.error("付款錯誤:", error);
+                alert("發生錯誤，請稍後再試。");
+            }
+        });
+    </script>
+</body>
+</html>

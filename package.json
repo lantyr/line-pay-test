@@ -1,0 +1,27 @@
+{
+  "name": "line-pay-test",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000l\u0000i\u0000n\u0000e\u0000-\u0000p\u0000a\u0000y\u0000-\u0000t\u0000e\u0000s\u0000t\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lantyr/line-pay-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lantyr/line-pay-test/issues"
+  },
+  "homepage": "https://github.com/lantyr/line-pay-test#readme",
+  "dependencies": {
+    "axios": "^1.8.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
